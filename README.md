@@ -1,68 +1,156 @@
-# Memory Page Compressibility Predictor
+# 🧠 Memory Page Compressibility Predictor (ML-Based)
 
-A fast, accurate predictor for memory page compressibility to optimize zram/swap compression decisions.
+A machine learning-based system to predict whether a memory page is compressible, helping optimize compression decisions in systems like zram and swap memory.
 
-## Overview
+---
 
-This project implements a two-stage predictor that determines whether a memory page is worth compressing before actually performing compression, reducing CPU overhead in memory management systems.
+## 🚀 Overview
 
-## Key Features
+Memory compression (e.g., zram) improves memory efficiency but introduces CPU overhead. Compressing already incompressible pages wastes time and resources.
 
-- **High Accuracy**: 97% on real-world data, 95-98% on synthetic data
-- **Fast Performance**: Stage-1 is 1.35x faster than full compression
-- **Two-Stage Architecture**: Fast heuristics + sampled compression for borderline cases
-- **Text Detection**: Optimized for real-world workloads with mixed data types
-- **Kernel Ready**: C implementation for Linux kernel integration
+This project builds an intelligent ML-based predictor that determines whether a memory page should be compressed **before performing compression**, significantly improving system performance.
 
-## Performance
+---
 
-- **Accuracy**: 97% on real-world data
-- **Recall**: 98% (critical for not missing compressible pages)
-- **Speed**: 32-50 μs per page prediction
-- **Stage-2 Usage**: <15% (most decisions made quickly)
+## 🔥 Key Highlights
 
-## Project Structure
+* ✅ **High Accuracy**: ~97–98% across multiple ML models
+* ⚡ **Fast Prediction**: Lightweight feature-based inference
+* 🤖 **Multiple Models Used**:
+
+  * Logistic Regression
+  * Random Forest
+  * Support Vector Machine (SVM)
+  * XGBoost (best performer)
+* 📊 **Feature Engineering**:
+
+  * Byte distribution analysis
+  * Maximum frequency ratio
+  * Zero ratio
+  * Run-length patterns
+* 🌐 **Interactive UI**:
+
+  * Streamlit app for real-time prediction on `.bin` memory pages
+* 🧩 **System-Level Relevance**:
+
+  * Inspired by OS-level memory optimization (zram, swap systems)
+
+---
+
+## 🧠 Machine Learning Pipeline
+
+1. **Data Generation**
+
+   * Synthetic memory pages using structured/random patterns (`phase1`)
+
+2. **Feature Extraction**
+
+   * `feat_distinct`
+   * `feat_max_freq_ratio`
+   * `feat_zero_ratio`
+   * `feat_run_count`
+
+3. **Model Training**
+
+   * Trained multiple classification models
+   * Compared performance across models
+
+4. **Evaluation**
+
+   * Accuracy: ~97–98%
+   * Balanced precision and recall
+
+5. **Deployment**
+
+   * Streamlit-based web application for predictions
+
+---
+
+## 📊 Model Performance
+
+| Model               | Accuracy |
+| ------------------- | -------- |
+| Logistic Regression | ~97.7%   |
+| Random Forest       | ~97.9%   |
+| SVM                 | ~97.6%   |
+| XGBoost             | ~97.8%   |
+
+📌 Tree-based models (Random Forest, XGBoost) performed best for structured features.
+
+---
+
+## 🗂️ Project Structure
 
 ```
-├── phase1/          # Synthetic data generation and labeling
-├── phase1b/         # Real-world data collection
-├── phase2/          # Stage-1 predictor development
-├── phase2b/         # Real-world evaluation
-├── phase3/          # Two-stage predictor
-├── phase3b/         # Real-world optimization
-├── kernel_implementation/  # C code for kernel integration
-└── run_all_phases.py      # Complete pipeline execution
+├── phase1/                  # Data generation & labeling
+├── phase2/                  # Feature extraction & prediction
+├── kernel_implementation/   # C-based system integration
+├── train_ml_models.py       # Model training & evaluation
+├── feature_importance.py    # Feature importance analysis
+├── model_comparison.py      # Model benchmarking
+├── streamlit_app.py         # Web application (UI)
+├── *.csv                    # Dataset & results
+├── *.png                    # Visualizations
 ```
 
-## Quick Start
+---
+
+## ⚡ Quick Start
 
 ```bash
 # Install dependencies
 pip install -r requirements.txt
 
-# Run complete pipeline
-python run_all_phases.py
+# Train models
+python train_ml_models.py
 
-# Or run individual phases
-python phase1/run_phase1.py
-python phase2/run_phase2.py
-python phase3/run_phase3.py
+# Run Streamlit app
+streamlit run streamlit_app.py
 ```
 
-## Results Summary
+---
 
-| Metric | Stage-1 Only | Two-Stage | Improved (Text Detection) |
-|--------|--------------|-----------|---------------------------|
-| Accuracy | 80% | 94% | **97%** |
-| Recall | 100% | 100% | **98%** |
-| Speed | 32 μs | 50 μs | 40 μs |
+## 🌐 Streamlit Demo
 
-## Applications
+Upload a `.bin` memory page and get:
 
-- **zram optimization**: Reduce CPU overhead in compressed swap
-- **Memory management**: Intelligent compression decisions
-- **Storage systems**: Predictive compression for better performance
+* Extracted features
+* Prediction: **Compressible / Incompressible**
 
-## License
+---
 
-MIT License - see LICENSE file for details.
+## 📌 Important Note
+
+Raw memory page dataset (`.bin` files) is not included in this repository to keep it lightweight.
+
+You can generate data using:
+
+```bash
+python phase1/phase1_generate_pages.py
+```
+
+---
+
+## 🎯 Applications
+
+* OS Memory Optimization (zram, swap systems)
+* Compression-aware system design
+* Storage & caching optimization
+* Performance-aware computing
+
+---
+
+## 💡 Skills Demonstrated
+
+* Machine Learning (Supervised Learning)
+* Feature Engineering
+* Model Comparison & Evaluation
+* Data Processing & Analysis
+* System-Level Thinking (OS + ML integration)
+* Streamlit Deployment
+
+---
+
+## 📜 License
+
+MIT License
