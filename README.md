@@ -1,14 +1,14 @@
-# 🧠 Memory Page Compressibility Predictor (ML-Based)
+# 🧠 Memory Page Compressibility Predictor (ML + Systems)
 
-A machine learning-based system to predict whether a memory page is compressible, helping optimize compression decisions in systems like zram and swap memory.
+A machine learning-based system to predict memory page compressibility, designed to optimize compression decisions in operating systems (e.g., zram, swap).
 
 ---
 
 ## 🚀 Overview
 
-Memory compression (e.g., zram) improves memory efficiency but introduces CPU overhead. Compressing already incompressible pages wastes time and resources.
+Memory compression improves memory utilization but introduces CPU overhead. Compressing already incompressible pages wastes time and resources.
 
-This project builds an intelligent ML-based predictor that determines whether a memory page should be compressed **before performing compression**, significantly improving system performance.
+This project builds an intelligent predictor using **machine learning + system-level insights** to determine whether a memory page should be compressed **before actual compression**, improving efficiency and reducing unnecessary computation.
 
 ---
 
@@ -16,53 +16,45 @@ This project builds an intelligent ML-based predictor that determines whether a 
 
 * ✅ **High Accuracy**: ~97–98% across multiple ML models
 * ⚡ **Fast Prediction**: Lightweight feature-based inference
-* 🤖 **Multiple Models Used**:
+* 🤖 **Models Used**:
 
   * Logistic Regression
   * Random Forest
   * Support Vector Machine (SVM)
-  * XGBoost (best performer)
+  * XGBoost
 * 📊 **Feature Engineering**:
 
-  * Byte distribution analysis
+  * Distinct byte count
   * Maximum frequency ratio
   * Zero ratio
   * Run-length patterns
 * 🌐 **Interactive UI**:
 
-  * Streamlit app for real-time prediction on `.bin` memory pages
-* 🧩 **System-Level Relevance**:
+  * Streamlit app for real-time prediction
+* 🧩 **System-Level Integration**:
 
-  * Inspired by OS-level memory optimization (zram, swap systems)
+  * C-based implementation for kernel-level usage
 
 ---
 
-## 🧠 Machine Learning Pipeline
+## 🧠 Project Pipeline
 
-1. **Data Generation**
+### 🔹 Phase 1 – Data Generation
 
-   * Synthetic memory pages using structured/random patterns (`phase1`)
+* Generate synthetic memory pages (`.bin` files)
+* Label pages as compressible/incompressible
 
-2. **Feature Extraction**
+### 🔹 Phase 2 – Feature Extraction & ML Modeling
 
-   * `feat_distinct`
-   * `feat_max_freq_ratio`
-   * `feat_zero_ratio`
-   * `feat_run_count`
+* Extract features from memory pages
+* Train ML models (LR, RF, SVM, XGBoost)
+* Evaluate and compare performance
 
-3. **Model Training**
+### 🔹 Phase 3 – Optimization
 
-   * Trained multiple classification models
-   * Compared performance across models
-
-4. **Evaluation**
-
-   * Accuracy: ~97–98%
-   * Balanced precision and recall
-
-5. **Deployment**
-
-   * Streamlit-based web application for predictions
+* Threshold tuning
+* Model refinement
+* Performance improvement
 
 ---
 
@@ -75,21 +67,27 @@ This project builds an intelligent ML-based predictor that determines whether a 
 | SVM                 | ~97.6%   |
 | XGBoost             | ~97.8%   |
 
-📌 Tree-based models (Random Forest, XGBoost) performed best for structured features.
+📌 Tree-based models performed best due to structured feature handling.
 
 ---
 
 ## 🗂️ Project Structure
 
 ```
+├── kernel_implementation/   # C code for kernel-level integration
 ├── phase1/                  # Data generation & labeling
-├── phase2/                  # Feature extraction & prediction
-├── kernel_implementation/   # C-based system integration
-├── train_ml_models.py       # Model training & evaluation
+├── phase1b/                 # Real-world dataset handling
+├── phase2/                  # Feature extraction & ML prediction
+├── phase2b/                 # Model evaluation
+├── phase3/                  # Optimization & tuning
+├── phase3b/                 # Advanced improvements
 ├── feature_importance.py    # Feature importance analysis
 ├── model_comparison.py      # Model benchmarking
-├── streamlit_app.py         # Web application (UI)
-├── *.csv                    # Dataset & results
+├── train_ml_models.py       # Training pipeline
+├── streamlit_app.py         # Web app for predictions
+├── run_all_phases.py        # Complete pipeline execution
+├── requirements.txt         # Dependencies
+├── *.csv                    # Datasets & results
 ├── *.png                    # Visualizations
 ```
 
@@ -104,26 +102,33 @@ pip install -r requirements.txt
 # Train models
 python train_ml_models.py
 
-# Run Streamlit app
+# Run full pipeline
+python run_all_phases.py
+
+# Launch Streamlit app
 streamlit run streamlit_app.py
 ```
 
 ---
 
-## 🌐 Streamlit Demo
+## 🌐 Streamlit App
 
-Upload a `.bin` memory page and get:
+The interactive dashboard allows users to:
 
-* Extracted features
-* Prediction: **Compressible / Incompressible**
+* Upload `.bin` memory page files
+* View extracted features
+* Get prediction:
+
+  * ✅ Compressible
+  * ❌ Incompressible
 
 ---
 
 ## 📌 Important Note
 
-Raw memory page dataset (`.bin` files) is not included in this repository to keep it lightweight.
+Large binary datasets (`pages/` folder with `.bin` files) are not included in this repository to keep it lightweight.
 
-You can generate data using:
+You can regenerate them using:
 
 ```bash
 python phase1/phase1_generate_pages.py
@@ -133,10 +138,10 @@ python phase1/phase1_generate_pages.py
 
 ## 🎯 Applications
 
-* OS Memory Optimization (zram, swap systems)
+* Operating System Memory Optimization (zram, swap)
 * Compression-aware system design
-* Storage & caching optimization
-* Performance-aware computing
+* Storage optimization
+* Performance-efficient computing
 
 ---
 
@@ -145,9 +150,9 @@ python phase1/phase1_generate_pages.py
 * Machine Learning (Supervised Learning)
 * Feature Engineering
 * Model Comparison & Evaluation
-* Data Processing & Analysis
-* System-Level Thinking (OS + ML integration)
+* Data Analysis & Visualization
 * Streamlit Deployment
+* Systems + ML Integration
 
 ---
 
