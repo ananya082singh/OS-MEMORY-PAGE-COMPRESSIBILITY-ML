@@ -71,6 +71,10 @@ def extract_features(data):
     zero_ratio = np.sum(arr == 0) / len(arr)
     run_count = np.sum(arr[:-1] != arr[1:])
 
+    probs = counts / len(arr)
+    probs = probs[probs>0]
+    entropy = -np.sum(probs * np.log2(probs))
+
     return [distinct, max_freq_ratio, zero_ratio, run_count]
 
 # =========================
