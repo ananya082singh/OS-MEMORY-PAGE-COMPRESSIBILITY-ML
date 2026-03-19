@@ -11,6 +11,19 @@ Memory compression improves memory utilization but introduces CPU overhead. Comp
 This project builds an intelligent predictor using **machine learning + system-level insights** to determine whether a memory page should be compressed **before actual compression**, improving efficiency and reducing unnecessary computation.
 
 ---
+## Live Demo
+
+A fully functional version of the project is deployed online:
+
+🔗 https://bit.ly/41hBoaY
+
+**Features:**
+- Upload `.bin` memory page files  
+- Real-time compressibility prediction  
+- Multi-model comparison (RF, XGBoost, SVM)  
+- Feature analysis and insights
+
+---
 
 ## Key Highlights
 
