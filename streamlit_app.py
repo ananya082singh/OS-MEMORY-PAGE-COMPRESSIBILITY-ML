@@ -75,7 +75,7 @@ def extract_features(data):
     probs = probs[probs>0]
     entropy = -np.sum(probs * np.log2(probs))
 
-    return [distinct, max_freq_ratio, zero_ratio, run_count]
+    return [distinct, max_freq_ratio, zero_ratio, run_count,entropy]
 
 # =========================
 # LOAD MODELS
